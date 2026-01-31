@@ -1,0 +1,75 @@
+# Makefile for Restaurant Intel project
+# If a command line errors, make stops immediately
+
+.DEFAULT_GOAL := help
+
+.PHONY: help dev up down logs ps dbshell api shell worker \
+		backend-test backend-lint backend-fmt \
+		frontend-install frontend-lint frontend-build \ 
+		docker-build clean
+
+help: ## Show available commands
+	@echo ""
+	@echo "Usage: make <target>"
+	@echo ""
+	@echo "Common targets:"
+	@echo "  dev               Start everything (db, backend, worker, frontend)"
+	@echo "  down			   Stop containers"
+	@echo "  logs              Tail logs"
+	@echo "  backend-test	   Run backend tests"
+	@echo "  backend-lint      Lint backend"
+	@echo "  backend-fmt       Format backend"
+	@echo "  frontend-lint     Lint frontend"
+	@echo "  frontend-build    Build frontend"
+	@echo "  docker-build      Build backend + frontend Docker images"
+	@echo ""
+
+dev: ## Build and start all services
+	docker compose up --build
+
+up: ## Start services (no build)
+	docker compose up
+
+down: ## Stop services
+	docker compose down
+
+logs: ## Follow logs for all services
+	docker compose logs -f
+
+ps: ## Show running services
+	docker compose ps
+
+dbshell: ## Open a psql shell inside the db container
+	docker compose exec db psql -U postgres -d app
+
+api: ## Open a shell inside the backend container
+	docker compose exec backend bash
+
+worker: ## Open a shell inside the worker container
+	docker compose exec worker bash
+
+backend-test: ## Run backend test suite (pytest)
+	docker compose run --rm backend pytest -q
+
+backend-lint: ## Lint backend with ruff
+	docker compose run --rm backend ruff check .
+
+backend-fmt: ## Format backend code with ruff
+	docker compose run --rm backend ruff format . 
+
+frontend-install: ## Install frontend deps
+	docker compose run --rm frontend pnpm install
+
+frontend-lint: ## Lint frontend code
+	docker compose run --rm frontend pnpm lint
+
+frontend-build: ## Build frontend code
+	docker compose run --rm frontend pnpm build
+
+docker-build: ## Build Docker images for backend and frontend
+	docker build -t ri-backend:local ./backend
+	docker build -t ri-frontend:local ./frontend
+
+clean: ## Remove local data + dangling docker artifacts
+	docker compose down -v
+	rm -rf .data
