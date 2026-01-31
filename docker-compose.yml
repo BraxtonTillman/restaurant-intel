@@ -1,0 +1,95 @@
+services:
+  # ---------------------------------------------
+  # DATABASE (Postgres)
+  # ---------------------------------------------
+  db:
+    image: postgres:16
+    container_name: ri-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+
+  # ---------------------------------------------
+  # BACKEND (FastAPI)
+  # ---------------------------------------------
+  backend:
+    build:
+      context: ./backend
+    container_name: ri-backend
+    env_file:
+      - .env
+    environment:
+      # Inside Docker, reach Postgres via service name "db"
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes: 
+      - ./backend:/app
+      - ./.data:/.data
+    command: >
+      uv run uvicorn app.main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+  
+
+  # ---------------------------------------------
+  # WORKER (Scheduled jobs: ingestion + metrics)
+  # ---------------------------------------------
+  worker:
+    build:
+      context: ./backend
+    container_name: ri-worker
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/app
+      WORKER_ENABLED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - ./.data:/.data
+    command: uv run python -m app.workers.run
+  
+
+  # ---------------------------------------------
+  # FRONTEND (Next.js)
+  # ---------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ri-frontend
+    env_file:
+    - .env
+    environment:
+      # Browser hits backend via localhost:8000, not docker service name.
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - ./app/node_modules
+    command: pnpm dev --host 0.0.0.0 --port 3000
+
+  
+volumes:
+  db_data:
+
