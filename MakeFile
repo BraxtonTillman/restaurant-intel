@@ -5,7 +5,7 @@
 
 .PHONY: help dev up down logs ps dbshell api shell worker \
 		backend-test backend-lint backend-fmt \
-		frontend-install frontend-lint frontend-build \ 
+		frontend-install frontend-lint frontend-build \
 		docker-build clean
 
 help: ## Show available commands
@@ -55,7 +55,7 @@ backend-lint: ## Lint backend with ruff
 	docker compose run --rm backend ruff check .
 
 backend-fmt: ## Format backend code with ruff
-	docker compose run --rm backend ruff format . 
+	docker compose run --rm backend ruff format .
 
 frontend-install: ## Install frontend deps
 	docker compose run --rm frontend pnpm install
