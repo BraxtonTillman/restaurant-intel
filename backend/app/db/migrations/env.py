@@ -1,10 +1,14 @@
-from app.db.base import Base
 import os
 import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool
 from alembic import context
+from app.db.base import Base
+from dotenv import load_dotenv
+from sqlalchemy import engine_from_config, pool
+
+load_dotenv()  # loads backend/.env by default if present
+
 
 # Add backend/app to path so we can import modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -18,6 +22,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+print("DATABASE_URL:", os.getenv("DATABASE_URL")) # Debug print to verify env variable
 # CRITICAL FIX: Override database URL from environment
 database_url = os.getenv("DATABASE_URL")
 if database_url:
