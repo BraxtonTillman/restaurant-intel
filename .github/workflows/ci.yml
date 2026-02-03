@@ -60,7 +60,7 @@ jobs:
 
             - name: Run migrations
               working-directory: backend
-              run: uv run alembic -c app/alembic.ini upgrade head
+              run: uv run alembic -c alembic.ini upgrade head
 
             - name: Lint (ruff)
               working-directory: backend
