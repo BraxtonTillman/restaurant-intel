@@ -23,7 +23,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-print("DATABASE_URL:", os.getenv("DATABASE_URL")) # Debug print to verify env variable
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))  # Debug print to verify env variable
 # CRITICAL FIX: Override database URL from environment
 database_url = os.getenv("DATABASE_URL")
 if database_url:
@@ -55,9 +55,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
