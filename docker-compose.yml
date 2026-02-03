@@ -33,7 +33,6 @@ services:
     environment:
       # Inside Docker, reach Postgres via service name "db"
       UV_SYSTEM_PYTHON: "1"
-      UV_PROJECT_ENVIRONMENT: /opt/venv
       UV_LINK_MODE: copy
       DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/app
     depends_on:
@@ -62,7 +61,6 @@ services:
       - .env
     environment:
       UV_SYSTEM_PYTHON: "1"
-      UV_PROJECT_ENVIRONMENT: /opt/venv
       UV_LINK_MODE: copy
       DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/app
       WORKER_ENABLED: "true"

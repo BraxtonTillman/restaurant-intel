@@ -6,7 +6,7 @@
 .PHONY: help dev up down logs ps dbshell api shell worker \
 		backend-test backend-lint backend-fmt \
 		frontend-install frontend-lint frontend-build \
-		docker-build clean
+		docker-build clean migration migrate migrate-down dbshell-alembic \
 
 help: ## Show available commands
 	@echo ""
@@ -14,9 +14,9 @@ help: ## Show available commands
 	@echo ""
 	@echo "Common targets:"
 	@echo "  dev               Start everything (db, backend, worker, frontend)"
-	@echo "  down			   Stop containers"
+	@echo "  down			         Stop containers"
 	@echo "  logs              Tail logs"
-	@echo "  backend-test	   Run backend tests"
+	@echo "  backend-test	     Run backend tests"
 	@echo "  backend-lint      Lint backend"
 	@echo "  backend-fmt       Format backend"
 	@echo "  frontend-lint     Lint frontend"
@@ -73,3 +73,28 @@ docker-build: ## Build Docker images for backend and frontend
 clean: ## Remove local data + dangling docker artifacts
 	docker compose down -v
 	rm -rf .data
+
+migration: ## Create new migration (use: make migration msg="add users table")
+	docker compose run --rm backend alembic -c app/db/alembic.ini revision --autogenerate -m "$(msg)"
+
+migrate: ## Apply pending migrations
+	docker compose run --rm backend alembic -c app/db/alembic.ini upgrade head
+
+migrate-down: ## Rollback last migration
+	docker compose run --rm backend alembic -c app/db/alembic.ini downgrade -1
+
+db-reset: ## Drop database and recreate (DESTRUCTIVE)
+	docker compose down -v
+	docker compose up -d db
+	sleep 2
+	make migrate
+
+shell-backend: ## Python shell in backend container
+	docker compose exec backend uv run python
+
+shell-frontend: ## Node shell in frontend
+	docker compose exec frontend sh
+
+prune: ## Remove all containers, volumes, and images (DESTRUCTIVE)
+	docker compose down -v --remove-orphans
+	docker system prune -af
