@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Restaurant Intel — Frontend
 
-## Getting Started
+Next.js (App Router) UI for the Restaurant Intelligence Platform. Displays metrics and insights backed by the FastAPI backend.
 
-First, run the development server:
+## Run locally
+
+**With Docker (recommended):** From the repo root, follow the main [README](../README.md). Start all services with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+make dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend is then available at <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Without Docker:** From this directory, with Node.js and pnpm installed:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm install
+pnpm dev
+```
 
-## Learn More
+Set `NEXT_PUBLIC_API_URL` (e.g. `http://localhost:8000`) so the app can reach the backend. See root `.env.example` for all env vars.
 
-To learn more about Next.js, take a look at the following resources:
+## Tech
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS
+- pnpm
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Commands
 
-## Deploy on Vercel
+From repo root:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `make frontend-lint` — lint  
+- `make frontend-build` — production build  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+From this directory:
+
+- `pnpm dev` — dev server  
+- `pnpm build` — build  
+- `pnpm start` — run production build  
+- `pnpm lint` — ESLint  
+
+For full setup, env vars, and architecture, see the [root README](../README.md).

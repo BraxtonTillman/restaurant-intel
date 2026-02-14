@@ -42,6 +42,8 @@ docker-volume/
 # LOCAL DATA / STORAGE
 # ---------------------------------------------
 .data/
+*.session.sql
+scratch.sql
 
 # ---------------------------------------------
 # DATABASE FILES (just in case)
