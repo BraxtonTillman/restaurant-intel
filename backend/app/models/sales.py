@@ -49,7 +49,7 @@ class IngestionRun(Base):
     )
 
     def __repr__(self) -> str:
-        return f"<IngestionRun(id={self.id}, source={self.source}, status{self.status})"
+        return f"<IngestionRun(id={self.id}, source={self.source}, status{self.status})>"
 
 
 class SalesOrder(Base):
