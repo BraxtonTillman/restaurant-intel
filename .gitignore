@@ -42,6 +42,9 @@ docker-volume/
 # LOCAL DATA / STORAGE
 # ---------------------------------------------
 .data/
+*.session.sql
+restaurant-intel.session.sql
+scratch.sql
 
 # ---------------------------------------------
 # DATABASE FILES (just in case)

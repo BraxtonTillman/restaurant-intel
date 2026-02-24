@@ -1,0 +1,46 @@
+name: Spike / Research
+description: Investigate options or prototype a solution
+title: "spike: "
+labels: ["type: spike"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - area: ingestion
+        - area: metrics
+        - area: backend
+        - area: frontend
+        - area: db
+        - area: infra
+        - area: api
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question
+      placeholder: "Example: What is the best way to schedule daily metrics computation in our stack?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: success
+    attributes:
+      label: Definition of done
+      placeholder: |
+        - [ ] Option comparison with pros/cons
+        - [ ] Recommendation
+        - [ ] Quick prototype or pseudo-code (if needed)
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      placeholder: "Example: must run in Docker, must be easy to test locally, avoid paid services."
+    validations:
+      required: false

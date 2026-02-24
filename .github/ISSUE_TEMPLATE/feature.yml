@@ -1,0 +1,66 @@
+name: Feature
+description: Build a new capability for Restaurant-Intel
+title: "feat: "
+labels: ["type: feature"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - area: backend
+        - area: api
+        - area: ingestion
+        - area: metrics
+        - area: db
+        - area: frontend
+        - area: ui
+        - area: infra
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome (what should exist when this is done?)
+      description: Write it like a testable result.
+      placeholder: "Example: A GET /api/metrics endpoint returns daily metrics for a restaurant_id and date range."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why do we need this? What problem does it solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements / Acceptance Criteria
+      description: Bullet list is fine.
+      placeholder: |
+        - [ ] Endpoint exists and is documented
+        - [ ] Validates inputs
+        - [ ] Handles empty datasets
+        - [ ] Includes tests
+    validations:
+      required: true
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      placeholder: "Example: No UI work in this issue."
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Links
+      description: Link designs, docs, related issues, etc.
+    validations:
+      required: false

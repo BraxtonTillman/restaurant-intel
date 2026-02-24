@@ -89,31 +89,36 @@ Clone the repository and navigate into it:
 
 ```bash
 git clone <repository-url>
-cd restaurant-intelligence
+cd restaurant-intel
+```
 
 Create a local environment file:
 
+```bash
 cp .env.example .env
+```
 
 The default values are suitable for local development.
-Running the Application
+
+### Running the Application
 
 Start all services:
 
+```bash
 make dev
+```
 
 This command starts the database, backend API, worker process, and frontend UI.
 
 Access points:
 
-    Frontend: http://localhost:3000
+- **Frontend:** <http://localhost:3000>
+- **Backend API:** <http://localhost:8000>
+- **Health endpoint:** <http://localhost:8000/health>
 
-    Backend API: http://localhost:8000
+### Common Development Commands
 
-    Health endpoint: http://localhost:8000/health
-
-Common Development Commands
-
+```bash
 make backend-test     # Run backend test suite
 make backend-lint     # Lint backend code
 make backend-fmt      # Format backend code
@@ -122,53 +127,50 @@ make frontend-build   # Build frontend
 make docker-build     # Build Docker images (sanity check)
 make logs             # Follow container logs
 make down             # Stop all services
+```
 
-Run make with no arguments to see all available targets.
-Continuous Integration
+Run `make` with no arguments to see all available targets.
+
+### Continuous Integration
 
 GitHub Actions runs on pull requests and on pushes to the main branch. The CI pipeline enforces several quality checks:
 
-    Backend linting, formatting, database migrations, and tests
-
-    Frontend linting and build verification
-
-    Docker image build sanity checks
+- Backend linting, formatting, database migrations, and tests
+- Frontend linting and build verification
+- Docker image build sanity checks
 
 A passing CI run indicates the code is safe to merge.
-MVP Scope
+
+---
+
+## MVP Scope
 
 The current MVP focuses on foundational capabilities:
 
-    CSV-based ingestion for sales and labor data
-
-    Canonical data modeling
-
-    Daily and weekly metric computation
-
-    Insight and recommendation framework
-
-    Local-first infrastructure and tooling
+- CSV-based ingestion for sales and labor data
+- Canonical data modeling
+- Daily and weekly metric computation
+- Insight and recommendation framework
+- Local-first infrastructure and tooling
 
 The following items are intentionally out of scope for the MVP:
 
-    Production deployment
+- Production deployment
+- Real-time third-party integrations
+- Advanced authentication and authorization
+- Multi-location analytics
 
-    Real-time third-party integrations
+---
 
-    Advanced authentication and authorization
+## Design Principles
 
-    Multi-location analytics
+- Local-first, cloud-shaped development
+- Canonical data and computed metrics over ad-hoc queries
+- Explicit configuration and boundaries
+- Strong foundations before feature expansion
 
-Design Principles
+---
 
-    Local-first, cloud-shaped development
-
-    Canonical data and computed metrics over ad-hoc queries
-
-    Explicit configuration and boundaries
-
-    Strong foundations before feature expansion
-
-Disclaimer
+## Disclaimer
 
 This project is under active development. APIs, schemas, and behavior may change as the MVP evolves.
