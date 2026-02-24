@@ -43,6 +43,7 @@ docker-volume/
 # ---------------------------------------------
 .data/
 *.session.sql
+restaurant-intel.session.sql
 scratch.sql
 
 # ---------------------------------------------

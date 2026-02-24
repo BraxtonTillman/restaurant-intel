@@ -1,0 +1,79 @@
+name: Bug
+description: Something is broken in Restaurant-Intel
+title: "bug: "
+labels: ["type: bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - area: backend
+        - area: api
+        - area: ingestion
+        - area: metrics
+        - area: db
+        - area: frontend
+        - area: ui
+        - area: infra
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug
+    attributes:
+      label: What happened?
+      description: What did you observe?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1) ...
+        2) ...
+        3) ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / error output
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      placeholder: |
+        - OS:
+        - Branch:
+        - Docker: yes/no
+        - Python version:
+        - Node version:
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "priority: p0"
+        - "priority: p1"
+        - "priority: p2"
+        - "priority: p3"
+    validations:
+      required: true
