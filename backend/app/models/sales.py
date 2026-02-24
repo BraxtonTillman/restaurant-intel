@@ -5,11 +5,11 @@ Docstring for backend.app.models.sales
 from datetime import datetime
 from enum import Enum
 
-from app.db.base import Base
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, Float, ForeignKey, String, func
 from sqlalchemy import Enum as SQLEnum
-from sqlalchemy import Float, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db.base import Base
 
 
 # This class checks the status of the ingestion run.
