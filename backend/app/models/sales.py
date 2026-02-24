@@ -5,9 +5,7 @@ Docstring for backend.app.models.sales
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import DateTime
-from sqlalchemy import Enum as SQLEnum
-from sqlalchemy import Float, ForeignKey, String, func
+from sqlalchemy import DateTime, Enum as SQLEnum, Float, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
