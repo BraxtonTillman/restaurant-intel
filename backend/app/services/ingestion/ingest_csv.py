@@ -23,7 +23,7 @@ def ingest_csv(file_path):
     db.flush()
 
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path) as file:
             reader = csv.DictReader(file)
 
             # Check Headers
@@ -69,8 +69,8 @@ def validate_row(row):
         total = float(row['total'])
         if total < 0:
             raise ValueError("Total is less than 0")
-    except:
-        raise ValueError(f"Invalid total: {row['total']}")
+    except Exception as err:
+        raise ValueError(f"Invalid total: {row['total']}") from err
 
     # Check date
     date_string = row['occurred_at']
@@ -83,9 +83,9 @@ def validate_row(row):
 
     for fmt in formats:
         try:
-            parsed_date =  datetime.strptime(date_string, fmt)
+            parsed_date = datetime.strptime(date_string, fmt)
             break
-        except:
+        except ValueError:
             continue
     if parsed_date is None:
         raise ValueError(f"Cannot parse date: {date_string}")
