@@ -12,3 +12,7 @@ def health():
 def root():
     return {"message": "Hello, World!"}
 
+
+@app.get("/metrics/summary")
+def get_metrics_summary():
+    pass
