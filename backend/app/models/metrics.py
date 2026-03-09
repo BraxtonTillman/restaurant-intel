@@ -2,9 +2,10 @@
 
 from datetime import date
 
-from app.db.base import Base
 from sqlalchemy import Date, Float, Integer
 from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.base import Base
 
 
 class MetricsDaily(Base):

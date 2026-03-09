@@ -1,6 +1,7 @@
 '''Ingestion service query'''
-from app.models.sales import IngestionRun
 from sqlalchemy.orm import Session
+
+from app.models.sales import IngestionRun
 
 
 def get_ingestion_run(db: Session):

@@ -1,7 +1,8 @@
 """Ingestion service queries."""
 
-from app.models.metrics import MetricsDaily
 from sqlalchemy.orm import Session
+
+from app.models.metrics import MetricsDaily
 
 
 def get_daily_metrics(db: Session):
