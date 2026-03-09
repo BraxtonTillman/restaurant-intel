@@ -11,4 +11,3 @@ app.include_router(ingestion_runs)
 @app.get("/")
 def root():
     return {"message": "Hello, World!"}
-

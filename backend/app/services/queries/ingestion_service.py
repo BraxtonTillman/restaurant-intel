@@ -1,4 +1,5 @@
-'''Ingestion service query'''
+"""Ingestion service query"""
+
 from sqlalchemy.orm import Session
 
 from app.models.sales import IngestionRun
