@@ -14,3 +14,19 @@ export async function getMetrics() {
 
   return res.json();
 }
+
+export default async function uploadCSV(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${BROWSER_API_BASE_URL}/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+  }
+
+  return res.json();
+}
