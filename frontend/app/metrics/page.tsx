@@ -7,7 +7,7 @@ export default async function Metrics() {
   const metrics = await getMetrics();
   const ingestionRuns = await getIngestionRuns();
   return (
-    <div>
+    <div className="px-8 py-6">
       <h1 className="text-2xl font-bold p-8">Daily Metrics</h1>
       <div className={"grid grid-cols-3 gap-4"}>
         {metrics.map((item) => (
