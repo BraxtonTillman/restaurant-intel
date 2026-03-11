@@ -15,7 +15,7 @@ export async function getMetrics() {
   return res.json();
 }
 
-export default async function uploadCSV(file: File) {
+export async function uploadCSV(file: File) {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -23,6 +23,9 @@ export default async function uploadCSV(file: File) {
     method: "POST",
     body: formData,
   });
+
+  console.log("Status:", res.status);
+  console.log("Ok:", res.ok);
 
   if (!res.ok) {
     throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
