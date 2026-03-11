@@ -24,11 +24,34 @@ export async function uploadCSV(file: File) {
     body: formData,
   });
 
-  console.log("Status:", res.status);
-  console.log("Ok:", res.ok);
-
   if (!res.ok) {
     throw new Error(`Upload failed: ${res.status} ${res.statusText}`);
+  }
+
+  return res.json();
+}
+
+export async function deleteIngestion(id: number) {
+  const res = await fetch(`${BROWSER_API_BASE_URL}/ingestion-runs/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error(`Delete failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function getIngestionRuns() {
+  const isServer = typeof window === "undefined";
+  const baseUrl = isServer ? SERVER_API_BASE_URL : BROWSER_API_BASE_URL;
+
+  const res = await fetch(`${baseUrl}/ingestion-runs`);
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch ingestion runs: ${res.status} ${res.statusText}`,
+    );
   }
 
   return res.json();
