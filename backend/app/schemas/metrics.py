@@ -5,7 +5,7 @@ from datetime import date
 from pydantic import BaseModel
 
 
-class metrics_daily(BaseModel):
+class MetricsDaily(BaseModel):
     date: date
     sales_total: float
     order_count: int

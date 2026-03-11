@@ -1,3 +1,5 @@
+from fastapi import FastAPI
+
 from app.api.routes.ingestion import router as ingestion_runs
 from app.api.routes.metrics import router as metrics_summary
 from app.api.routes.upload import router as upload_csv
@@ -20,4 +22,3 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"message": "Hello, World!"}
-
