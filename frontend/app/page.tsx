@@ -1,13 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type DragEvent } from "react";
 
 export default function Home() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
 
-  function handleDrop(e) {
+  function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    const droppedFile = e.dataTransfer.files[0];
+
+    const files = e.dataTransfer?.files;
+    if (!files || files.length === 0) {
+      alert("Please drop a file");
+      return;
+    }
+
+    const droppedFile = files[0];
     if (droppedFile.type === "text/csv") {
       setFile(droppedFile);
     } else {
