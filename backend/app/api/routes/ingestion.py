@@ -1,10 +1,11 @@
 """Ingestion API routes."""
 
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
 from app.db.session import get_db
 from app.schemas.ingestion import IngestionRun
 from app.services.queries.ingestion_service import get_ingestion_run
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
