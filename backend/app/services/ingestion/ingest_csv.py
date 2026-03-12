@@ -3,19 +3,17 @@ Docstring for ingest_csv file
 """
 
 import csv
+import io
 from datetime import datetime
 
-from app.db.session import SessionLocal
 from app.models.sales import IngestionRun, IngestionStatus, SalesOrder
 
 
-def ingest_csv(file_path):
-    db = SessionLocal()
-
+def ingest_csv(contents: bytes, db):
     # Create ingestion run
     run = IngestionRun(
         source="manual",
-        file_path=file_path,
+        file_path="uploaded_via_api",
         status=IngestionStatus.UPLOADED,
     )
 
@@ -23,26 +21,26 @@ def ingest_csv(file_path):
     db.flush()
 
     try:
-        with open(file_path) as file:
-            reader = csv.DictReader(file)
+        content_str = contents.decode("utf-8")
+        reader = csv.DictReader(io.StringIO(content_str))
 
-            # Check Headers
-            required = {"occurred_at", "order_id", "total"}
-            headers = set(reader.fieldnames) if reader.fieldnames else set()
-            missing = required - headers
+        # Check Headers
+        required = {"occurred_at", "order_id", "total"}
+        headers = set(reader.fieldnames) if reader.fieldnames else set()
+        missing = required - headers
 
-            if missing:
-                raise ValueError(f"Missing columns: {missing}")
+        if missing:
+            raise ValueError(f"Missing columns: {missing}")
 
-            for row in reader:
-                validated = validate_row(row)
+        for row in reader:
+            validated = validate_row(row)
 
-                order = SalesOrder(ingestion_run_id=run.id, **validated)
-                db.add(order)
+            order = SalesOrder(ingestion_run_id=run.id, **validated)
+            db.add(order)
 
-            run.status = IngestionStatus.PROCESSED
-            db.commit()
-            print("Success!")
+        run.status = IngestionStatus.PROCESSED
+        db.commit()
+        print("Success!")
 
     except Exception as e:
         run.status = IngestionStatus.FAILED
