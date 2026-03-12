@@ -15,5 +15,3 @@ def delete_ingestion_run(id: int, db: Session = Depends(get_db)):  # noqa: B008
     db.delete(run)
     db.commit()
     return {"message": "success"}
-
-
