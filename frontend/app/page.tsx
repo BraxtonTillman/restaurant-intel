@@ -1,29 +1,24 @@
 "use client";
 
-import { uploadCSV } from "@/lib/api";
-import { useState } from "react";
+import { useState, type DragEvent } from "react";
 
 export default function Home() {
-  const [file, setFile] = useState(null);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [file, setFile] = useState<File | null>(null);
 
-  function handleDrop(e) {
+  function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    const droppedFile = e.dataTransfer.files[0];
+
+    const files = e.dataTransfer?.files;
+    if (!files || files.length === 0) {
+      alert("Please drop a file");
+      return;
+    }
+
+    const droppedFile = files[0];
     if (droppedFile.type === "text/csv") {
       setFile(droppedFile);
     } else {
       alert("Please drop a CSV file");
-    }
-  }
-
-  async function handleUpload() {
-    try {
-      await uploadCSV(file);
-      setStatus("success");
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
     }
   }
 
@@ -40,17 +35,7 @@ export default function Home() {
             File ready: {file.name}
           </p>
         )}
-        {status === "success" && <p>Uploaded successfully!</p>}
-        {status === "error" && <p>Upload failed, try again.</p>}
       </div>
-      {file && (
-        <button
-          className="bg-blue-500 px-4 py-2 rounded mr-2 no-underline"
-          onClick={handleUpload}
-        >
-          Upload {file.name}
-        </button>
-      )}
     </div>
   );
 }

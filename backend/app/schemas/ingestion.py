@@ -2,8 +2,9 @@
 
 from datetime import datetime
 
-from app.models.sales import IngestionStatus
 from pydantic import BaseModel
+
+from app.models.sales import IngestionStatus
 
 
 class SalesOrderSchema(BaseModel):
@@ -16,7 +17,7 @@ class SalesOrderSchema(BaseModel):
     model_config = {"from_attributes": True}
 
 
-class ingestion_run(BaseModel):
+class IngestionRun(BaseModel):
     id: int
     source: str
     status: IngestionStatus
