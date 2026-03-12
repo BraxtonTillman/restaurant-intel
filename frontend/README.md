@@ -1,6 +1,19 @@
-# Restaurant Intel — Frontend
+# Restaurant Intel — Frontend (CRUD UI)
 
-Next.js (App Router) UI for the Restaurant Intelligence Platform. Displays metrics and insights backed by the FastAPI backend.
+This directory contains the Next.js frontend for a simple restaurant‑themed CRUD app.  
+It is a small learning UI that talks to the FastAPI backend and lets you list, create, edit, and delete records.
+
+---
+
+## What this frontend does
+
+- Renders basic pages and forms for CRUD operations.
+- Calls the backend API to load and save data.
+- Uses Tailwind for quick styling and layout.
+
+It is intentionally minimal and focused on wiring the browser to the API and database.
+
+---
 
 ## Run locally
 
@@ -10,7 +23,7 @@ Next.js (App Router) UI for the Restaurant Intelligence Platform. Displays metri
 make dev
 ```
 
-The frontend is then available at <http://localhost:3000>.
+The frontend will be available at <http://localhost:3000>.
 
 **Without Docker:** From this directory, with Node.js and pnpm installed:
 
@@ -19,27 +32,32 @@ pnpm install
 pnpm dev
 ```
 
-Set `NEXT_PUBLIC_API_URL` (e.g. `http://localhost:8000`) so the app can reach the backend. See root `.env.example` for all env vars.
+Set `NEXT_PUBLIC_API_URL` (for example `http://localhost:8000`) so the app can reach the backend.  
+See the root `.env.example` for the relevant variables.
+
+---
 
 ## Tech
 
-- Next.js 16 (App Router)
+- Next.js (App Router)
 - TypeScript
 - Tailwind CSS
 - pnpm
 
-## Commands
+---
 
-From repo root:
+## Useful commands
 
-- `make frontend-lint` — lint  
+From the repo root:
+
+- `make frontend-lint` — lint the frontend  
 - `make frontend-build` — production build  
 
 From this directory:
 
 - `pnpm dev` — dev server  
 - `pnpm build` — build  
-- `pnpm start` — run production build  
+- `pnpm start` — run the production build  
 - `pnpm lint` — ESLint  
 
-For full setup, env vars, and architecture, see the [root README](../README.md).
+For the bigger picture of how this fits into the app, see the [root README](../README.md).

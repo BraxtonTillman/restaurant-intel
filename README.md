@@ -1,176 +1,75 @@
-# Restaurant Intelligence Platform (MVP)
+# Restaurant Intel — Simple CRUD App
 
-A local-first, data-driven SaaS platform designed to help restaurants identify margin leaks, understand operational performance, and make better decisions by aggregating data from existing systems such as POS, labor scheduling, and reservations.
-
-This project is currently an MVP in active development. The primary focus is building a strong foundation: clean data ingestion, a canonical data model, reliable metrics, and actionable insights.
-
----
-
-## Core Idea
-
-Restaurants already collect a large amount of data, but it is fragmented across multiple tools. Interpreting that data and turning it into meaningful decisions is time-consuming and error-prone.
-
-This platform acts as a decision layer on top of existing restaurant systems. It unifies data from multiple sources and translates it into clear metrics and recommendations, with the goal of improving margins and operational efficiency. The emphasis is on decision support rather than dashboards alone.
+This repository contains one of my first full‑stack CRUD experiments.  
+It is **not** a full “restaurant intelligence platform” or production SaaS product.  
+Instead, it’s a learning project that lets you create, read, update, and delete basic restaurant‑related records through a small web UI and API.
 
 ---
 
-## Architecture Overview
+## What it actually does
 
-This repository is structured as a monorepo and is intended to be run locally during development using Docker Compose. The architecture mirrors a production-ready setup while remaining simple enough for rapid iteration.
+- **Basic CRUD**: simple create/read/update/delete operations for restaurant data (e.g. locations, menu items, or similar entities).
+- **Web UI**: a small Next.js frontend for listing records and editing them.
+- **API**: a FastAPI backend that exposes basic REST endpoints and talks to a PostgreSQL database.
+- **Local only**: everything is intended to run on your machine for learning and experimentation.
 
-The system consists of the following components:
-
-- A FastAPI backend responsible for APIs, data ingestion, and business logic
-- A background worker process responsible for scheduled jobs such as ingestion and metric computation
-- A Next.js frontend used to present metrics and insights
-- A PostgreSQL database used as the canonical data store
-- Docker Compose used to orchestrate local services
+There is no production deployment, no fancy analytics, and no real integrations here—just a straightforward CRUD app.
 
 ---
 
-## Tech Stack
+## Tech stack (kept simple)
 
-### Backend
+- **Backend**: Python, FastAPI, SQLAlchemy, Alembic
+- **Frontend**: Next.js (App Router), TypeScript, Tailwind CSS
+- **Database**: PostgreSQL
+- **Tooling**: Docker, Docker Compose, `make`
 
-- Python 3.12
-- FastAPI
-- SQLAlchemy and Alembic
-- uv for dependency management
-
-### Frontend
-
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
-- pnpm
-
-### Data and Jobs
-
-- PostgreSQL 16
-- Scheduled background worker (no message queue in MVP)
-- Canonical schema with computed metrics
-
-### Tooling
-
-- Docker and Docker Compose
-- GitHub Actions for CI
-- Ruff, Pytest, ESLint
+The code layout is split into a `backend` folder (API + database) and a `frontend` folder (UI).
 
 ---
 
-## Repository Structure
-
-.
-├── backend/ # FastAPI app, worker, database models, migrations
-├── frontend/ # Next.js application
-├── docs/ # Architecture and design notes
-├── .github/ # CI workflows
-├── docker-compose.yml
-├── Makefile
-├── .env.example
-├── .editorconfig
-└── .gitignore
-
----
-
-## Local Development
+## Running it locally
 
 ### Prerequisites
 
 - Docker and Docker Compose
-- Make
-- Node.js (optional, for running frontend outside Docker)
-
----
+- `make`
 
 ### Setup
 
-Clone the repository and navigate into it:
+From your terminal:
 
 ```bash
 git clone <repository-url>
 cd restaurant-intel
-```
-
-Create a local environment file:
-
-```bash
 cp .env.example .env
 ```
 
-The default values are suitable for local development.
+The default `.env` values are meant for local development.
 
-### Running the Application
+### Start the app
 
-Start all services:
+From the repo root:
 
 ```bash
 make dev
 ```
 
-This command starts the database, backend API, worker process, and frontend UI.
-
-Access points:
+Once everything starts:
 
 - **Frontend:** <http://localhost:3000>
-- **Backend API:** <http://localhost:8000>
-- **Health endpoint:** <http://localhost:8000/health>
+- **Backend API / health:** <http://localhost:8000>
 
-### Common Development Commands
-
-```bash
-make backend-test     # Run backend test suite
-make backend-lint     # Lint backend code
-make backend-fmt      # Format backend code
-make frontend-lint    # Lint frontend code
-make frontend-build   # Build frontend
-make docker-build     # Build Docker images (sanity check)
-make logs             # Follow container logs
-make down             # Stop all services
-```
-
-Run `make` with no arguments to see all available targets.
-
-### Continuous Integration
-
-GitHub Actions runs on pull requests and on pushes to the main branch. The CI pipeline enforces several quality checks:
-
-- Backend linting, formatting, database migrations, and tests
-- Frontend linting and build verification
-- Docker image build sanity checks
-
-A passing CI run indicates the code is safe to merge.
+That’s enough to click around the UI and exercise basic CRUD against the database.
 
 ---
 
-## MVP Scope
+## Why this project exists
 
-The current MVP focuses on foundational capabilities:
+This codebase is mainly a place for me to practice:
 
-- CSV-based ingestion for sales and labor data
-- Canonical data modeling
-- Daily and weekly metric computation
-- Insight and recommendation framework
-- Local-first infrastructure and tooling
+- wiring up a real database behind a web app,
+- handling simple REST endpoints,
+- and seeing a full request go from the browser, through the API, into the database, and back.
 
-The following items are intentionally out of scope for the MVP:
-
-- Production deployment
-- Real-time third-party integrations
-- Advanced authentication and authorization
-- Multi-location analytics
-
----
-
-## Design Principles
-
-- Local-first, cloud-shaped development
-- Canonical data and computed metrics over ad-hoc queries
-- Explicit configuration and boundaries
-- Strong foundations before feature expansion
-
----
-
-## Disclaimer
-
-This project is under active development. APIs, schemas, and behavior may change as the MVP evolves.
+If you’re reading this, treat it as a **learning sandbox**, not a polished product.

@@ -1,9 +1,16 @@
 # Documentation
 
-Design and architecture notes for the Restaurant Intelligence Platform.
+This folder is for any extra notes or sketches related to this **simple restaurant CRUD learning app**.
 
-- **Getting started, setup, and high-level architecture:** see the [root README](../README.md).
-- **Backend layout and commands:** see [backend/README.md](../backend/README.md).
-- **Frontend layout and commands:** see [frontend/README.md](../frontend/README.md).
+The project is not a full “platform” or production system—it’s mainly here so I can practice wiring up a database, API, and UI.
 
-This folder is for additional design docs (e.g. data model decisions, API contracts, runbooks) as the project grows.
+- **Getting started and what the app actually does:** see the [root README](../README.md).
+- **Backend details and commands:** see [backend/README.md](../backend/README.md).
+- **Frontend details and commands:** see [frontend/README.md](../frontend/README.md).
+
+As the app evolves, this directory can hold things like:
+
+- small design documents,
+- notes on the data model,
+- example API contracts,
+- or any other learning notes I want to keep alongside the code.
