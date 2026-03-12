@@ -6,13 +6,20 @@ export async function getMetrics() {
   const isServer = typeof window === "undefined";
   const baseUrl = isServer ? SERVER_API_BASE_URL : BROWSER_API_BASE_URL;
 
-  const res = await fetch(`${baseUrl}/metrics/summary`);
+  try {
+    const res = await fetch(`${baseUrl}/metrics/summary`);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch metrics: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch metrics: ${res.status} ${res.statusText}`,
+      );
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Failed to fetch metrics. Returning empty array.", error);
+    return [];
   }
-
-  return res.json();
 }
 
 export default async function uploadCSV(file: File) {
